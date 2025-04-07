@@ -10,6 +10,7 @@ import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/chat")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ChatController {
 	
 	private final OllamaChatModel ollamaChatModel;
@@ -37,7 +39,7 @@ public class ChatController {
 			ChatClient chatClient = ChatClient.builder(ollamaChatModel).build();
 			var promptSpec = chatClient.prompt().advisors(new QuestionAnswerAdvisor(vectorStore)).user(message);
 			String response = promptSpec.call().content();
-			log.info("Response generated");
+			log.info("Response generated: " + response);
 			return response;
 		} catch (Exception e) {
 			log.error("An error occured while processing message: ", e);

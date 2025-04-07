@@ -13,6 +13,7 @@ import com.example.ollama_rag_chatbot.service.DocumentIngestionService;
 
 @RestController
 @RequestMapping("/api/files")
+@CrossOrigin(origins = "http://localhost:5173")
 public class FileUploadController {
 	
 	private static final Logger log = LoggerFactory.getLogger(FileUploadController.class);
